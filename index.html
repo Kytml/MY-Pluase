@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="system">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="纯本地网页录音机：开始 / 暂停 / 继续 / 停止，录音保存在浏览器本地数据库，支持播放、重命名、删除与下载备份。">
+<title>录音机 · 本地录音管理</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg>
+      </div>
+      <div>
+        <h1>录音机</h1>
+        <div class="sub">开始 · 暂停 · 继续 · 停止，本地保存与管理</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="badge" id="devStatus"><i></i><span>正在检测麦克风…</span></div>
+      <button id="btnSettings" class="icon-btn" title="录音与界面设置">设置</button>
+    </div>
+  </header>
+
+  <section class="card" aria-label="录音控制">
+    <div class="rec-top">
+      <div class="state" id="stateText"><i></i><span>待命</span></div>
+      <div class="hint" id="fmtHint">音频格式：自动适配浏览器</div>
+    </div>
+    <div class="timer" id="timer">00:00:00</div>
+    <canvas id="wave" height="64" aria-hidden="true"></canvas>
+    <div class="controls">
+      <button class="primary" id="btnStart">开始录音</button>
+      <button id="btnPause" disabled>暂停</button>
+      <button id="btnResume" disabled>继续</button>
+      <button class="stop" id="btnStop" disabled>停止并保存</button>
+    </div>
+    <div class="notice" id="notice" role="status">
+      <div class="nbody" id="noticeBody"></div>
+      <button class="nclose" id="noticeClose" title="关闭提示">×</button>
+    </div>
+    <div class="foot-note">
+      录音仅保存在本机浏览器中，不会上传到任何服务器。首次点击「开始录音」时请允许使用麦克风。<br>
+      快捷键：<kbd>空格</kbd> 暂停 / 继续，<kbd>Esc</kbd> 关闭播放条。
+    </div>
+  </section>
+
+  <section class="card" aria-label="录音列表">
+    <div class="list-head">
+      <h2>录音列表</h2>
+      <div class="list-sum" id="listSum">共 0 条</div>
+    </div>
+    <ul id="recordList"></ul>
+    <div class="empty" id="empty"><strong>还没有录音</strong>点击上方「开始录音」，停止后会自动保存到这里。</div>
+    <div class="foot-note">
+      清理浏览器网站数据会一并删除录音；重要文件请点「下载」备份到电脑。<br>
+      多个标签页同时打开时，列表会自动同步。
+    </div>
+  </section>
+</div>
+
+<div class="player hidden" id="player">
+  <button class="pbtn primary" id="pToggle" aria-label="播放或暂停"></button>
+  <div class="pbody">
+    <div class="pname" id="pName"></div>
+    <div class="prow">
+      <input type="range" id="pSeek" min="0" max="1000" value="0" aria-label="播放进度">
+      <span class="ptime" id="pTime">00:00 / 00:00</span>
+    </div>
+  </div>
+  <button class="pclose" id="pClose">关闭</button>
+</div>
+
+<dialog id="settingsDialog" class="settings-dialog" aria-label="设置"></dialog>
+<audio id="audioEl" preload="metadata"></audio>
+
+<div class="file-warning" id="fileWarning" hidden>
+  <div class="fw-card">
+    <h2>请通过本地服务打开，而不是双击 HTML 文件</h2>
+    <p>本程序使用 ES 模块与浏览器本地数据库，直接以 <code>file://</code> 打开时浏览器会拦截模块加载，并可能禁用麦克风与存储。</p>
+    <ol>
+      <li>已安装 Node.js：在项目目录运行 <code>npm start</code>（无需 npm install）。</li>
+      <li>Windows 也可以直接双击 <code>start.bat</code>。</li>
+      <li>只有 Python：运行 <code>python start.py</code>。</li>
+    </ol>
+    <p>启动后访问 <code>http://127.0.0.1:8168</code> 即可使用。</p>
+  </div>
+</div>
+<noscript>
+  <div class="file-warning"><div class="fw-card"><h2>需要启用 JavaScript</h2><p>录音功能依赖浏览器 JavaScript，请在浏览器设置中允许本页运行脚本。</p></div></div>
+</noscript>
+
+<script>
+// 非模块脚本：file:// 直开时模块会被 CORS 拦截，这里先给出可操作的引导，避免白屏。
+if (location.protocol === 'file:') {
+  document.getElementById('fileWarning').hidden = false;
+}
+</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

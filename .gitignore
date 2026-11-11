@@ -1,0 +1,17 @@
+# 依赖与构建
+node_modules/
+dist/
+
+# 测试与临时产物
+_chromeprofile/
+.test-tmp/
+test-results/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# 本地工作区数据（不随项目发布）
+.workbuddy/

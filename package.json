@@ -1,0 +1,29 @@
+{
+  "name": "voice-recorder",
+  "version": "1.0.0",
+  "description": "纯本地网页录音机：开始/暂停/继续/停止，录音保存在浏览器 IndexedDB，支持播放、重命名、删除、下载与多标签页同步。零运行时依赖。",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs --no-open",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "node tests/e2e/run.mjs",
+    "test:all": "npm test && npm run test:e2e",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [
+    "recorder",
+    "audio",
+    "mediarecorder",
+    "indexeddb",
+    "offline",
+    "privacy"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}
