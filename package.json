@@ -5,6 +5,11 @@
   "type": "module",
   "private": false,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kytml/MY-Pluase.git"
+  },
+  "homepage": "https://github.com/Kytml/MY-Pluase#readme",
   "engines": {
     "node": ">=20"
   },

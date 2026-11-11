@@ -27,8 +27,8 @@
 要求：**Node.js 20+**（端到端测试需要 22+），或仅有 **Python 3** 也可以运行。
 
 ```bash
-git clone <你的仓库地址>
-cd voice-recorder
+git clone https://github.com/Kytml/MY-Pluase.git
+cd MY-Pluase
 npm start          # 等价于 node server.mjs，无需 npm install
 ```
 
@@ -173,7 +173,7 @@ git init
 git add .
 git commit -m "feat: 本地网页录音机 v1.0.0"
 git branch -M main
-git remote add origin <你的仓库地址>
+git remote add origin https://github.com/Kytml/MY-Pluase.git
 git push -u origin main
 ```
 
